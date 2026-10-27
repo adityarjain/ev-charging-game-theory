@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Charging Price War · EV Game Theory</title>
+  <meta name="description" content="A game-theory model of how two rival EV charging stations set prices, and why both end up earning less." />
+  <meta name="theme-color" content="#0b0d10" />
+  <link rel="preload" as="image" href="/img/hero-trails.jpg" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top" aria-label="The Charging Price War, back to top">
+      <span class="nav__mark" aria-hidden="true"></span>Price War
+    </a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#game">The game</a>
+      <a href="#how">How it works</a>
+      <a href="#play">Play</a>
+      <a href="#lab">Analysis</a>
+      <a href="#shift">What changes it</a>
+      <a href="#team">Team</a>
+    </nav>
+    <a class="btn btn--light btn--sm" href="#play">Play the game</a>
+  </header>
+
+  <main id="top" class="page">
+    <!-- Attention -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__media" aria-hidden="true">
+        <img src="/img/hero-trails.jpg" alt="" class="hero__img" fetchpriority="high" />
+      </div>
+      <div class="hero__wash" aria-hidden="true"></div>
+      <div class="hero__content">
+        <h1 id="hero-title" class="hero__title">
+          <span class="line"><span>Two charging stations. One street.</span></span>
+          <span class="line"><span>Who cuts the price first?</span></span>
+        </h1>
+        <p class="hero__sub">A game-theory model of how rival EV chargers set prices, and why both end up earning less.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--light" href="#play">Play the game</a>
+          <a class="btn btn--ghost" href="#game">See the maths</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-label="Concepts used in this project">
+      <div class="marquee__track">
+        <span>Nash equilibrium</span><i></i><span>Best response</span><i></i><span>Dominant strategy</span><i></i>
+        <span>Prisoner's dilemma</span><i></i><span>Payoff matrix</span><i></i><span>Mixed strategy</span><i></i>
+        <span aria-hidden="true">Nash equilibrium</span><i></i><span aria-hidden="true">Best response</span><i></i>
+        <span aria-hidden="true">Dominant strategy</span><i></i><span aria-hidden="true">Prisoner's dilemma</span><i></i>
+        <span aria-hidden="true">Payoff matrix</span><i></i><span aria-hidden="true">Mixed strategy</span><i></i>
+      </div>
+    </div>
+
+    <!-- Interest -->
+    <section class="chapter" id="game" aria-labelledby="game-title">
+      <div class="wrap">
+        <h2 id="game-title" class="display reveal">
+          Every price is a
+          <span class="pill-img" style="background-image:url('/img/two-cars.jpg')" role="img" aria-label="Two cars parked side by side"></span>
+          bet on what the rival will do.
+        </h2>
+        <p class="lede reveal">Two stations, two prices each: ₹10 or ₹12 per kWh. Drivers split evenly when prices match. When they differ, the cheaper station wins 80% of them.</p>
+
+        <div class="bento">
+          <article class="card card--matrix reveal" aria-labelledby="matrix-title">
+            <div class="card__head">
+              <h3 id="matrix-title">The payoff matrix</h3>
+              <p class="card__hint">Daily profit for (Station A, Station B). Hover a cell.</p>
+            </div>
+            <div class="matrix" id="matrix" role="grid" aria-label="Payoff matrix"></div>
+            <p class="matrix__explain" id="matrix-explain" aria-live="polite"></p>
+          </article>
+
+          <article class="card card--photo card--wide reveal">
+            <img src="/img/bridge.jpg" alt="" class="card__bg" loading="lazy" />
+            <div class="card__shade" aria-hidden="true"></div>
+            <div class="card__body">
+              <p class="card__kicker">Where they end up</p>
+              <p class="card__big" id="bento-eq">Both charge ₹10</p>
+              <p class="card__text" id="bento-eq-text"></p>
+            </div>
+          </article>
+
+          <article class="card card--stat reveal">
+            <p class="card__kicker">Left on the table</p>
+            <p class="card__big mono" id="bento-gap"></p>
+            <div class="minibars" id="bento-bars" aria-hidden="true"></div>
+            <p class="card__text" id="bento-gap-text"></p>
+          </article>
+
+          <article class="card card--photo reveal">
+            <img src="/img/city.jpg" alt="" class="card__bg" loading="lazy" />
+            <div class="card__shade" aria-hidden="true"></div>
+            <div class="card__body">
+              <p class="card__big mono" id="bento-q">80%</p>
+              <p class="card__text">of drivers pick the cheaper charger when prices differ.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Desire -->
+    <section class="chapter chapter--scrub" aria-label="The core argument">
+      <div class="wrap wrap--narrow">
+        <p class="scrub" id="scrub"></p>
+      </div>
+    </section>
+
+    <section class="chapter split" id="how" aria-labelledby="how-title">
+      <div class="wrap split__grid">
+        <div class="split__pin">
+          <h2 id="how-title" class="display">How the game plays out</h2>
+          <p class="lede">Five moves, from a price choice to a stable outcome nobody wants to leave.</p>
+          <div class="split__photo"><img src="/img/neon.jpg" alt="A busy street lit with neon signs at night" loading="lazy" /></div>
+        </div>
+        <ol class="split__steps" id="steps"></ol>
+      </div>
+    </section>
+
+    <section class="chapter play" id="play" aria-labelledby="play-title">
+      <div class="wrap">
+        <h2 id="play-title" class="display reveal">Your turn. Set both prices.</h2>
+        <p class="lede reveal">Pick a price for each station, then see if either one would rather switch on its own. That single test is a Nash equilibrium.</p>
+
+        <div class="play__board reveal">
+          <div class="player player--a">
+            <p class="player__name">Station A</p>
+            <div class="seg" role="radiogroup" aria-label="Station A price" data-player="a"></div>
+            <dl class="player__stats" id="stats-a"></dl>
+          </div>
+
+          <div class="play__center">
+            <div class="split-bar" aria-hidden="true">
+              <div class="split-bar__a" id="bar-a"></div>
+              <div class="split-bar__b" id="bar-b"></div>
+            </div>
+            <p class="split-bar__legend" id="bar-legend"></p>
+            <p class="verdict" id="verdict" aria-live="polite"></p>
+            <ul class="devs" id="devs"></ul>
+          </div>
+
+          <div class="player player--b">
+            <p class="player__name">Station B</p>
+            <div class="seg" role="radiogroup" aria-label="Station B price" data-player="b"></div>
+            <dl class="player__stats" id="stats-b"></dl>
+          </div>
+        </div>
+
+        <details class="tweak reveal" id="tweak">
+          <summary>
+            <span>Change the market</span>
+            <span class="tweak__now" id="tweak-now"></span>
+          </summary>
+          <div class="tweak__grid">
+            <label class="field"><span>Low price <output id="o-lowPrice"></output></span>
+              <input type="range" id="lowPrice" min="5" max="15" step="0.5" /></label>
+            <label class="field"><span>High price <output id="o-highPrice"></output></span>
+              <input type="range" id="highPrice" min="6" max="25" step="0.5" /></label>
+            <label class="field"><span>Station A cost <output id="o-costA"></output></span>
+              <input type="range" id="costA" min="0" max="14" step="0.5" /></label>
+            <label class="field"><span>Station B cost <output id="o-costB"></output></span>
+              <input type="range" id="costB" min="0" max="14" step="0.5" /></label>
+            <label class="field"><span>Share won by the cheaper station <output id="o-cheapShare"></output></span>
+              <input type="range" id="cheapShare" min="0.5" max="1" step="0.01" /></label>
+            <label class="field"><span>Total demand <output id="o-demand"></output></span>
+              <input type="range" id="demand" min="200" max="3000" step="100" /></label>
+          </div>
+          <p class="tweak__error" id="tweak-error" role="alert"></p>
+          <div class="tweak__foot">
+            <p class="tweak__summary" id="tweak-summary" aria-live="polite"></p>
+            <button type="button" class="btn btn--ghost btn--sm" id="reset">Restore baseline</button>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="chapter lab" id="lab" aria-labelledby="lab-title">
+      <div class="wrap">
+        <div class="lab__head reveal">
+          <h2 id="lab-title" class="display">Follow the arrows.</h2>
+          <button type="button" class="btn btn--ghost btn--sm" id="present" aria-pressed="false">Present full screen</button>
+        </div>
+        <p class="lede reveal">Each arrow points the way a station wants to move, and by how much. The cell no arrow leaves is the Nash equilibrium. It follows the prices and market settings you set above; click any cell to load it into the game.</p>
+
+        <div class="lab__grid reveal">
+          <div class="lab__matrix">
+            <div class="amx" id="amx" role="grid" aria-label="Live payoff matrix with best-response arrows"></div>
+            <p class="amx__legend">
+              <span class="k k--a">Teal arrows: Station A moving between rows</span>
+              <span class="k k--b">Amber arrows: Station B moving between columns</span>
+            </p>
+          </div>
+          <div class="proofs" id="proofs" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter shift" id="shift" aria-labelledby="shift-title">
+      <div class="wrap">
+        <div class="shift__photo zoom"><img src="/img/road.jpg" alt="An empty road running into the distance" loading="lazy" /></div>
+        <h2 id="shift-title" class="display reveal">What would make them both charge more?</h2>
+        <p class="lede reveal">Drag the slider. When fewer drivers chase the cheaper price, undercutting stops paying, and the stable outcome flips.</p>
+
+        <div class="chart-card reveal">
+          <svg id="chart" viewBox="0 0 800 380" role="img" aria-labelledby="chart-desc"></svg>
+          <p id="chart-desc" class="sr-only">Station A's extra profit from charging the low price instead of the high price, as the cheaper station's share of drivers changes.</p>
+          <label class="field field--wide"><span>Share won by the cheaper station <output id="o-q2"></output></span>
+            <input type="range" id="q2" min="0.5" max="1" step="0.01" /></label>
+          <p class="chart-read" id="chart-read" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter uses" aria-labelledby="uses-title">
+      <div class="wrap">
+        <h2 id="uses-title" class="display reveal">Where this thinking shows up</h2>
+        <div class="accordion reveal" id="accordion">
+          <button class="slice" style="--img:url('/img/two-cars.jpg')" aria-expanded="true">
+            <span class="slice__title">Charging networks</span>
+            <span class="slice__text">Before cutting prices, an operator can predict how the station across the road will answer.</span>
+          </button>
+          <button class="slice" style="--img:url('/img/neon.jpg')" aria-expanded="false">
+            <span class="slice__title">Price wars</span>
+            <span class="slice__text">It explains why cuts spread even when every seller ends up with thinner margins.</span>
+          </button>
+          <button class="slice" style="--img:url('/img/city.jpg')" aria-expanded="false">
+            <span class="slice__title">Any two rivals</span>
+            <span class="slice__text">Airlines, telecoms, food delivery: wherever customers move to the cheaper option.</span>
+          </button>
+          <button class="slice" style="--img:url('/img/bridge.jpg')" aria-expanded="false">
+            <span class="slice__title">Rules and regulators</span>
+            <span class="slice__text">The gap between what firms choose and what they would choose together is what competition law watches.</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter faq" aria-labelledby="faq-title">
+      <div class="wrap wrap--narrow">
+        <h2 id="faq-title" class="display reveal">Questions worth asking</h2>
+        <div class="faq__list" id="faq"></div>
+      </div>
+    </section>
+
+    <!-- Action -->
+    <section class="finale" aria-labelledby="finale-title">
+      <div class="wrap">
+        <h2 id="finale-title" class="finale__title reveal">Change the rules. Watch the equilibrium move.</h2>
+        <div class="finale__ctas reveal">
+          <a class="btn btn--light btn--lg" href="#play">Play the game</a>
+          <a class="btn btn--ghost btn--lg" href="/report.pdf" download>Download the report</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="team">
+    <div class="wrap footer__grid">
+      <div>
+        <p class="footer__title">Game-Theoretic Analysis of EV Charging Station Competition</p>
+        <p class="footer__muted">Game Theory · Section C. Prices and costs are illustrative values for an academic model, not market data.</p>
+      </div>
+      <ul class="footer__team" id="team-list"></ul>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
