@@ -164,7 +164,7 @@ The model explains incentives. It does not predict real prices.
 
 ## Screenshots
 
-`assets/screenshots/` holds screenshots of the earlier Streamlit version, which the report and slides still use. Retake them from the website before final submission.
+`assets/screenshots/` holds five captures of the website (hero, payoff matrix, game simulator, analysis arrows, sensitivity chart), used in the report and slide 8.
 
 ## Updating the report and presentation
 
