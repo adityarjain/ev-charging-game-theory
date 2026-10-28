@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 // Keep in sync with team.py.
 const TEAM = [
   ["Aditya Raj Jain", "2427030117"],
-  ["Arnav Khandelwal", "242703019"],
+  ["Arnav Khandelwal", "2427030196"],
   ["Pranav Chauhan", "2427030220"],
   ["Khushi Yadav", "2427030186"],
 ];

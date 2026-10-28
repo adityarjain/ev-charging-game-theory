@@ -3,7 +3,7 @@ title: "Game-Theoretic Analysis of EV Charging Station Competition"
 subtitle: "Project Report · Subject: Game Theory · Section C"
 author:
   - "Aditya Raj Jain — 2427030117"
-  - "Arnav Khandelwal — 242703019"
+  - "Arnav Khandelwal — 2427030196"
   - "Pranav Chauhan — 2427030220"
   - "Khushi Yadav — 2427030186"
 date: "Faculty: ____________________     Submission date: ____________________"

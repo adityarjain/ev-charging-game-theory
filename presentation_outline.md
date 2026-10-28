@@ -9,7 +9,7 @@ Suggested split for 4 speakers: **Aditya** slides 1–3, **Arnav** 4–6, **Pran
 ## Slide 1: Title and team
 - Game-Theoretic Analysis of EV Charging Station Competition
 - Game Theory · Section C
-- Aditya Raj Jain (2427030117), Arnav Khandelwal (242703019), Pranav Chauhan (2427030220), Khushi Yadav (2427030186)
+- Aditya Raj Jain (2427030117), Arnav Khandelwal (2427030196), Pranav Chauhan (2427030220), Khushi Yadav (2427030186)
 
 **Script:** "We model how two EV charging stations choose prices when each one's profit depends on the other's choice."
 

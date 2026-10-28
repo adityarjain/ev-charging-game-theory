@@ -2,9 +2,7 @@
 
 A Game Theory project (Section C) that models two EV charging stations choosing a price per kWh as a two-player, simultaneous, non-cooperative game. It computes the payoff matrix, best responses, Nash equilibria, joint-profit outcomes, a Prisoner's Dilemma check, mixed strategies and a sensitivity analysis, and presents them in an animated, interactive website (`web/`).
 
-**Team:** Aditya Raj Jain (2427030117), Arnav Khandelwal (242703019), Pranav Chauhan (2427030220), Khushi Yadav (2427030186)
-
-> ⚠️ **Please confirm before submission:** Arnav Khandelwal's ID `242703019` has 9 digits, while the others have 10. It is reproduced exactly as supplied. If it is wrong, fix it in `team.py` and `report.md` (title block), then rebuild the documents (see below).
+**Team:** Aditya Raj Jain (2427030117), Arnav Khandelwal (2427030196), Pranav Chauhan (2427030220), Khushi Yadav (2427030186)
 
 ## Problem statement
 
