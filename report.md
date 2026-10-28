@@ -15,7 +15,7 @@ date: "Faculty: ____________________     Submission date: ____________________"
 
 # Abstract
 
-Two electric-vehicle (EV) charging stations that share a market must each choose a price per kWh without knowing the other's choice. A higher price earns a larger margin on each kWh, but customers move to the cheaper station. We model this interaction as a two-player, simultaneous, non-cooperative game with two pure strategies per player (Low = ₹10/kWh, High = ₹12/kWh). Payoffs are derived from a demand-allocation rule and a profit equation, and the payoff matrix, best responses and Nash equilibria are computed by a Python module rather than entered by hand. Under the baseline assumptions (1,000 kWh of demand, ₹6/kWh variable cost, 80% of demand to the cheaper station), Low is a strictly dominant strategy for both stations, so (Low, Low) is the unique pure-strategy Nash equilibrium with a profit of ₹2,000 each. The outcome (High, High) would yield ₹3,000 each and the highest combined profit (₹6,000), but it is not stable, because each station gains ₹200 by undercutting. The game satisfies the Prisoner's Dilemma ordering T > R > P > S. A sensitivity analysis that re-solves the game for every parameter value shows that the result depends on how strongly price moves customers: below q = 2/3 the equilibrium becomes (High, High), and between 2/3 and 3/4 both outcomes are equilibria. The model is delivered as an interactive Streamlit website with 48 automated tests. All prices and costs are illustrative assumptions, not market data.
+Two electric-vehicle (EV) charging stations that share a market must each choose a price per kWh without knowing the other's choice. A higher price earns a larger margin on each kWh, but customers move to the cheaper station. We model this interaction as a two-player, simultaneous, non-cooperative game with two pure strategies per player (Low = ₹10/kWh, High = ₹12/kWh). Payoffs are derived from a demand-allocation rule and a profit equation, and the payoff matrix, best responses and Nash equilibria are computed by a Python module rather than entered by hand. Under the baseline assumptions (1,000 kWh of demand, ₹6/kWh variable cost, 80% of demand to the cheaper station), Low is a strictly dominant strategy for both stations, so (Low, Low) is the unique pure-strategy Nash equilibrium with a profit of ₹2,000 each. The outcome (High, High) would yield ₹3,000 each and the highest combined profit (₹6,000), but it is not stable, because each station gains ₹200 by undercutting. The game satisfies the Prisoner's Dilemma ordering T > R > P > S. A sensitivity analysis that re-solves the game for every parameter value shows that the result depends on how strongly price moves customers: below q = 2/3 the equilibrium becomes (High, High), and between 2/3 and 3/4 both outcomes are equilibria. The model is delivered as an interactive, animated website that runs the same model in the browser, backed by 49 automated tests. All prices and costs are illustrative assumptions, not market data.
 
 # 1. Introduction
 
@@ -195,16 +195,17 @@ Since 3,200 > 3,000 > 2,000 > 1,200, the ordering **T > R > P > S holds for both
 
 # 7. Software Architecture
 
-The project is a small Python application with one source of truth for all calculations.
+The project has two parts: a Python model that is the source of truth for all calculations, and a static website that presents it.
 
 | File | Responsibility |
 |---|---|
 | `game_theory.py` | Parameters and validation, demand shares, revenue/cost/profit, payoff matrix, best responses, Nash search, deviations, dominance, joint profit, Prisoner's Dilemma test, mixed equilibrium, sensitivity analysis. No user-interface code. |
-| `visualizations.py` | Plotly charts built from `game_theory` results. |
-| `app.py` | Streamlit website: eight pages, navigation, session state, styling. Contains no profit arithmetic. |
-| `team.py` | Project title and team details shared by the app and the slides. |
+| `web/src/model.js` | A line-for-line JavaScript port of the model, so the website computes every number in the browser with no server. |
+| `web/src/main.js` | Renders the page from the model's results, handles interaction and runs the GSAP scroll animations. Contains no hard-coded payoffs. |
+| `web/index.html`, `web/src/style.css` | Page structure, copy and the dark visual design. Built with Vite. |
+| `team.py` | Project title and team details shared by the slides. |
 | `make_docs.py` | Generates report figures (Matplotlib) and `presentation.pptx` (python-pptx) from the model. |
-| `tests/` | Pytest suites for the model and parameter validation. |
+| `tests/` | Pytest suites for the model, parameter validation, and a parity test that checks the JavaScript model against the Python model. |
 
 The equilibrium functions accept any two-player payoff matrix, not just the pricing game. This lets the tests check them on textbook games (coordination, chicken, matching pennies) whose answers are known independently.
 
@@ -220,24 +221,25 @@ The equilibrium functions accept any two-player payoff matrix, not just the pric
 
 # 9. User Interface Design
 
-The website (`streamlit run app.py`) uses a dark, low-glare theme: an off-black background, off-white text and a single muted teal accent. Station A is shown in teal and Station B in amber with a hatch pattern, so the two remain distinguishable without colour. Its eight pages follow the logic of the analysis:
+The website is a single scrolling page written for a general audience, so a viewer with no game-theory background can follow the argument. It uses a dark, low-glare theme: an off-black background, off-white text, Station A in teal and Station B in amber (the amber share bar is also hatched, so the stations remain distinguishable without colour). Scroll animations use GSAP and are switched off when the viewer's system asks for reduced motion. It runs with `npm run dev` in the `web` folder, or can be built into a static site. Its sections follow the logic of the analysis:
 
-1. **Executive overview:** problem, research question, objectives, a flow diagram of the game, the core equations, parameter table and key findings, all computed for the current parameters.
-2. **Configure the market:** inputs for both prices, demand, both costs and q, with validation messages and a restore-baseline button.
-3. **Payoff matrix:** the 2×2 matrix with best responses (▲ for A, ◆ for B, bold and underlined), the Nash cell (thick border and label), the joint maximum (★) and the selected cell (dashed outline), plus a legend and a projector mode with large text.
-4. **Strategy simulator:** choose each station's price and see price, share, energy, revenue, cost and profit, followed by side-by-side tables of what happens if A or B switches alone.
-5. **Nash equilibrium lab:** why each equilibrium qualifies, best responses and dominance, profitable deviations from non-equilibria, joint-profit comparison, the Prisoner's Dilemma check and the mixed-strategy analysis.
-6. **Charts and sensitivity:** profit comparison, joint profit, demand split, the q-sensitivity chart and the two-parameter equilibrium map.
-7. **Applications and limitations.**
-8. **Methodology and viva guide:** concept summaries and eleven likely viva questions with answers that match the implementation.
+1. **Hero:** the research question in one line ("Who cuts the price first?") with links to play or read the maths.
+2. **The game:** the payoff matrix with the stable cell and the joint-profit cell labelled, the equilibrium in plain words, the ₹2,000 of combined profit left on the table, and the 80% share assumption. Hovering a cell explains who would switch from it and why.
+3. **How it works:** five pinned steps from a price choice through demand share, energy and profit to the Nash test.
+4. **Play:** choose each station's price and see price, share, energy, revenue, cost and profit, a verdict (stable or unstable) and what each station would gain by switching alone. *Change the market* opens sliders for both prices, both costs, q and demand, with validation messages and *Restore baseline*.
+5. **Analysis ("Follow the arrows"):** the matrix with an arrow between every pair of neighbouring cells showing which way a station wants to move and how much it gains; the cell no arrow leaves is the Nash equilibrium. Beside it are best responses, dominance, the Prisoner's Dilemma test (T, R, P, S for each station), joint profit and the mixed-strategy result. A *Present full screen* button enlarges this section for the viva.
+6. **What changes it:** an interactive version of the q-sensitivity chart with a slider; the shaded regions and the stated outcome are re-solved as q moves.
+7. **Applications, questions worth asking, team.**
 
-![Executive overview page (screenshot of the running app at baseline).](assets/screenshots/01_overview.png){width=100%}
+Every number on the page is computed by `model.js` from the current parameters, and all sections update together when a price or slider changes.
 
-![Payoff matrix explorer. The (Low, Low) cell is marked as the Nash equilibrium; (High, High) is selected and marked as the joint-profit maximum.](assets/screenshots/02_payoff_matrix.png){width=100%}
+![The website's opening screen.](assets/screenshots/web_01_hero.png){width=100%}
 
-![Strategy simulator at (High, High): each station would gain ₹200 by switching alone to Low.](assets/screenshots/03_simulator.png){width=100%}
+![The payoff matrix section at baseline. (₹10, ₹10) is marked as stable; (₹12, ₹12) earns the most together.](assets/screenshots/web_02_matrix.png){width=100%}
 
-![Nash equilibrium laboratory.](assets/screenshots/04_nash_lab.png){width=100%}
+![The game simulator at (₹12, ₹12): each station would gain ₹200 by switching alone to ₹10, so the outcome is unstable.](assets/screenshots/web_03_simulator.png){width=100%}
+
+![The analysis section. Every arrow points towards (₹10, ₹10), the Nash equilibrium; the panels show best responses, dominance, the Prisoner's Dilemma test, joint profit and the mixed-strategy check.](assets/screenshots/web_04_analysis.png){width=100%}
 
 # 10. Testing Methodology and Results
 
@@ -251,10 +253,11 @@ Automated tests were written with pytest and cover:
 - **Joint profit and Prisoner's Dilemma:** joint profits and maximiser; T, R, P, S values and the ordering.
 - **Dynamic behaviour:** changing q and costs changes the matrix and analysis; sensitivity results recalculated; analytical thresholds agree with the solver; equilibrium grid codes.
 - **Validation:** nine invalid-parameter cases raise clear errors; unknown strategies are rejected; boundary cases q = 0.5 and q = 1.
+- **Website parity:** the JavaScript model in `web/src/model.js` is run with Node.js on 145 parameter sets (the baseline, a sweep of q, costs, prices and demand, asymmetric costs and the threshold values) and its payoff matrix, equilibria, dominance, Prisoner's Dilemma result, mixed equilibrium and joint maximum are compared with the Python model.
 
-**Result.** Running `pytest -v` on Python 3.14.6 with pytest 9.1.1 collected **48 tests, and all 48 passed** (0.10 s).
+**Result.** Running `pytest -v` on Python 3.14.6 with pytest 9.1.1 collected **49 tests, and all 49 passed**.
 
-The website was also checked manually in a browser: every page loaded without exceptions; entering a high price below the low price showed the validation message and kept the last valid parameters; *Restore baseline* reset all inputs; and setting the high price to ₹16 produced two equilibria with weak dominance and switched off the Prisoner's Dilemma label, as the formulas predict.
+The website was also checked manually in a browser. At baseline every section showed the values above and all arrows pointed to (₹10, ₹10); entering a high price below the low price showed a validation message and kept the last valid parameters; *Restore baseline* reset all inputs; setting q to 0.70 produced two equilibria, a mixed equilibrium with p = q = 0.5 and ₹2,400 expected, and switched off the Prisoner's Dilemma label; and the page had no horizontal overflow at a 500-pixel phone width.
 
 # 11. Sensitivity Analysis
 
@@ -298,11 +301,9 @@ Three regimes appear, matching the thresholds of Section 6.7:
 4. **Multiple equilibria.** In the intermediate range both (Low, Low) and (High, High) are stable. Which one occurs then depends on expectations or history, something the one-shot model cannot decide.
 5. **Consumers.** The low-price equilibrium is worse for the firms but better for drivers; the model compares firm profits only and does not measure consumer welfare.
 
-The website's screenshots below show how these results are presented interactively.
+The website presents the sensitivity result interactively: dragging the slider moves the marker along both lines and re-solves the game.
 
-![Charts and sensitivity page in the running app.](assets/screenshots/05_charts.png){width=100%}
-
-![Sensitivity chart in the app, with the current q marked.](assets/screenshots/06_sensitivity.png){width=100%}
+![The website's sensitivity chart at q = 0.80, with the three outcome regions computed by the solver.](assets/screenshots/web_05_sensitivity.png){width=100%}
 
 # 13. Applications
 
@@ -344,6 +345,6 @@ The project modelled price competition between two EV charging stations as a two
 5. Hotelling, H. (1929). Stability in competition. *The Economic Journal*, 39(153), 41–57.
 6. Bertrand, J. (1883). Review of *Théorie mathématique de la richesse sociale* and *Recherches sur les principes mathématiques de la théorie des richesses*. *Journal des Savants*, 67, 499–508.
 7. Harris, C. R., et al. (2020). Array programming with NumPy. *Nature*, 585, 357–362.
-8. Streamlit documentation. https://docs.streamlit.io
-9. Plotly Python documentation. https://plotly.com/python/
+8. Vite documentation. https://vite.dev
+9. GSAP (GreenSock Animation Platform) documentation. https://gsap.com/docs/
 10. pytest documentation. https://docs.pytest.org

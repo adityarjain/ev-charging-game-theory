@@ -56,14 +56,14 @@ Suggested split for 4 speakers: **Aditya** slides 1–3, **Arnav** 4–6, **Pran
 **Script (viva point):** "A Nash equilibrium is stable against one player switching alone. The joint maximum is not, so the firms forgo ₹2,000 together, while drivers pay less."
 
 ## Slide 8: Website and implementation
-- Screenshots: payoff matrix explorer and strategy simulator (real captures of the running app).
-- `game_theory.py` holds the logic, `app.py` + `visualizations.py` the 8-page UI, and the 48 pytest tests pass.
+- Screenshots: the "Follow the arrows" analysis section and the game simulator (captures of the running website).
+- `game_theory.py` holds the logic; `web/` is the Vite + GSAP website, whose `model.js` runs the same model in the browser. All 49 pytest tests pass, including a parity test between the two models.
 
 **Live demo (about 1 minute):**
-1. Run `streamlit run app.py`.
-2. On *Payoff matrix*, turn on *Projector mode* and point out the ▲/◆ markers.
-3. On *Strategy simulator*, choose High/High and show each station gains ₹200 by switching.
-4. On *Configure the market*, set q = 0.70 and open *Nash equilibrium lab* to show two equilibria and a mixed equilibrium (p* = 0.5).
+1. Run `cd web && npm install && npm run dev` and open http://localhost:5173.
+2. In *Play*, set both stations to ₹12 and show that each gains ₹200 by switching alone.
+3. In *Analysis*, show that every arrow points to (₹10, ₹10), then press *Present full screen*.
+4. Open *Change the market*, set q = 0.70, and show two equilibria and the mixed equilibrium (p* = 0.5).
 5. Click *Restore baseline*.
 
 ## Slide 9: Results, sensitivity and applications

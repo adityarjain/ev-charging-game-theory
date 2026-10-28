@@ -390,16 +390,18 @@ def build_presentation(figs: dict[str, Path]) -> Path:
               f"maximum High/High is not. The firms forgo {rs(gap)} of combined profit, while drivers pay less.")
 
     # 8 Website
-    s = _frame(prs, "Website and implementation", "Interactive Streamlit dashboard", 8)
-    _picture(s, SHOTS / "02_payoff_matrix.png", Inches(0.6), Inches(1.75), w=Inches(6.1))
-    _picture(s, SHOTS / "03_simulator.png", Inches(6.9), Inches(1.75), w=Inches(6.1))
-    _text(s, Inches(0.6), Inches(5.35), Inches(12.3), Inches(1.6), [
+    s = _frame(prs, "Website and implementation", "An interactive website anyone can play", 8)
+    _picture(s, SHOTS / "web_04_analysis.png", Inches(0.6), Inches(1.75), h=Inches(3.55))
+    _picture(s, SHOTS / "web_03_simulator.png", Inches(5.4), Inches(1.75), h=Inches(3.55))
+    _text(s, Inches(0.6), Inches(5.45), Inches(12.3), Inches(1.6), [
         "game_theory.py: model, best responses, Nash search, PD check, mixed strategies, sensitivity",
-        "app.py + visualizations.py: 8 pages in Streamlit and Plotly  ·  pytest suite on the model",
-        "Run locally:  streamlit run app.py",
+        "web/: Vite + GSAP site; model.js runs the same model in the browser  ·  49 pytest tests incl. JS parity",
+        "Run locally:  cd web && npm install && npm run dev",
     ], 15, False, NAVY)
-    _notes(s, "Live demo: on Configure, set q to 0.70 and show two equilibria appear; then show the "
-              "simulator's unilateral-deviation panels.")
+    _notes(s, "Live demo: in Play, set both stations to ₹12 and show each gains ₹200 by switching. "
+              "In Analysis, every arrow points to (₹10, ₹10); press Present full screen. "
+              "Open Change the market, set q to 0.70 and show two equilibria and the 50/50 mixed strategy. "
+              "Then Restore baseline.")
 
     # 9 Results
     s = _frame(prs, "Results and sensitivity", "How the outcome changes with q and cost", 9)
@@ -420,7 +422,7 @@ def build_presentation(figs: dict[str, Path]) -> Path:
         "Under the baseline, competition drives both stations to the low price.",
         "The equilibrium is stable, yet not the joint-profit maximum: a Prisoner's Dilemma.",
         "Whether undercutting pays depends on driver price sensitivity (q) and on margins.",
-        "All results are computed, tested and explorable in the dashboard.",
+        "All results are computed, tested and explorable on the website.",
     ], 18)
     _text(s, Inches(7.2), Inches(1.8), Inches(5.6), Inches(0.5), "Future scope", 20, True, TEAL)
     _bullets(s, Inches(7.2), Inches(2.4), Inches(5.6), Inches(4.5), [

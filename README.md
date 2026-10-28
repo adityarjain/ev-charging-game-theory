@@ -93,7 +93,7 @@ ev-charging-game-theory/
 │   └── test_js_parity.py   # website model == Python model
 └── assets/
     ├── figures/            # generated charts used in the report and slides
-    └── screenshots/        # screenshots of the earlier Streamlit version
+    └── screenshots/        # website screenshots used in the report and slides
 ```
 
 ## Running the website (macOS)
