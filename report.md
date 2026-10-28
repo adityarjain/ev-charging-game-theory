@@ -6,7 +6,7 @@ author:
   - "Arnav Khandelwal — 2427030196"
   - "Pranav Chauhan — 2427030220"
   - "Khushi Yadav — 2427030186"
-date: "Faculty: ____________________     Submission date: ____________________"
+date: "Faculty: Dr Soni Gupta"
 ---
 
 ```{=openxml}

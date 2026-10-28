@@ -6,6 +6,7 @@ Edit this file to update names or IDs everywhere at once.
 PROJECT_TITLE = "Game-Theoretic Analysis of EV Charging Station Competition"
 SUBJECT = "Game Theory"
 SECTION = "Section C"
+FACULTY = "Dr Soni Gupta"
 
 TEAM = [
     ("Aditya Raj Jain", "2427030117"),

@@ -20,7 +20,7 @@ from pptx.util import Inches, Pt
 
 import game_theory as gt
 from game_theory import BASELINE, HIGH, LOW, STRATEGIES
-from team import PROJECT_TITLE, SECTION, SUBJECT, TEAM
+from team import FACULTY, PROJECT_TITLE, SECTION, SUBJECT, TEAM
 
 ROOT = Path(__file__).parent
 FIG = ROOT / "assets" / "figures"
@@ -280,6 +280,7 @@ def build_presentation(figs: dict[str, Path]) -> Path:
           "A two-player pricing game: payoff matrix, best responses, Nash equilibrium", 18, False, "#d5e6ea")
     _text(s, Inches(0.8), Inches(5.1), Inches(8), Inches(1.8), [f"{n}  ·  {i}" for n, i in TEAM], 16, False,
           "#ffffff")
+    _text(s, Inches(8.8), Inches(5.1), Inches(4), Inches(0.5), f"Faculty: {FACULTY}", 16, False, "#d5e6ea")
     _notes(s, "Introduce the team and the topic: we model how two EV charging stations choose prices when "
               "each one's profit depends on the other's choice.")
 

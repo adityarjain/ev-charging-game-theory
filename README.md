@@ -181,7 +181,7 @@ The model explains incentives. It does not predict real prices.
 
 4. For a PDF, open `report.docx` in Word and use **File → Save As → PDF**. The included `report.pdf` was rendered from `report.md` through pandoc's HTML output and Chrome.
 5. When opening `report.docx`, accept Word's prompt to update fields so the table of contents fills in.
-6. Fill in the faculty name and submission date on the title page.
+6. The faculty name is set in `team.py` (slides) and the `date:` line of `report.md` (report title page).
 
 ## Optional: put the website online
 
