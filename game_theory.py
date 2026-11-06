@@ -417,34 +417,27 @@ def classify_equilibria(eq: list[tuple[str, str]]) -> int:
     return 4
 
 
-GRID_PARAMS = {"cost": "Operating cost (both stations), Rs/kWh",
-               "high_price": "High price, Rs/kWh"}
+def sensitivity_grid(p: MarketParams, q_values, costs) -> np.ndarray:
+    """Equilibrium class (see EQ_CODES) on a grid: rows = common cost of both stations, cols = q.
 
-
-def sensitivity_grid(p: MarketParams, q_values, values, param: str = "cost") -> np.ndarray:
-    """Equilibrium class (see EQ_CODES) on a grid: rows = `param` values, cols = q.
-
-    param="cost" sets both stations' cost; param="high_price" varies the high price.
     Invalid combinations (e.g. cost >= low price) are marked -1.
     """
-    codes = np.full((len(values), len(q_values)), -1, dtype=int)
-    for i, v in enumerate(values):
-        changes = {"cost_a": float(v), "cost_b": float(v)} if param == "cost" else {param: float(v)}
+    codes = np.full((len(costs), len(q_values)), -1, dtype=int)
+    for i, c in enumerate(costs):
         for j, q in enumerate(q_values):
-            params = with_changes(p, cheap_share=float(q), **changes)
+            params = with_changes(p, cheap_share=float(q), cost_a=float(c), cost_b=float(c))
             if not validation_errors(params):
                 codes[i, j] = classify_equilibria(pure_nash_equilibria(payoff_matrix(params)))
     return codes
 
 
-def q_thresholds(p: MarketParams, cost: float | None = None) -> tuple[float, float]:
-    """Thresholds on q for a station with the given cost (default cost_a).
+def q_thresholds(p: MarketParams) -> tuple[float, float]:
+    """Thresholds on q for Station A (cost c = cost_a).
 
     Low is the best reply to Low  iff  q > 1 - (p_L - c) / (2 (p_H - c)).
     Low is the best reply to High iff  q > (p_H - c) / (2 (p_L - c)).
     """
-    c = p.cost_a if cost is None else cost
-    ml, mh = p.low_price - c, p.high_price - c
+    ml, mh = p.low_price - p.cost_a, p.high_price - p.cost_a
     return 1 - ml / (2 * mh), mh / (2 * ml)
 
 

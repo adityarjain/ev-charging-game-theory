@@ -14,7 +14,7 @@ Charging at a higher price earns more per kWh, but customers move to the cheaper
 - A general solver that finds every pure Nash equilibrium (unique, multiple or none) and keeps ties.
 - Strict and weak dominance, unilateral-deviation diagnostics, joint-profit comparison, and a computed Prisoner's Dilemma test.
 - The 2×2 mixed-strategy equilibrium with validity checks.
-- Sensitivity analysis over q, plus a two-parameter equilibrium map over cost or high price.
+- Sensitivity analysis over q, plus a two-parameter equilibrium map over q and operating cost.
 - A single-page website with GSAP scroll animations: an interactive payoff matrix, a simulator where you set both prices and see who wants to switch, market sliders with validation and restore baseline, and a live sensitivity chart.
 - The website runs the same model in the browser (`web/src/model.js`), and a parity test checks it against `game_theory.py` on 145 parameter sets.
 - 49 automated pytest tests.

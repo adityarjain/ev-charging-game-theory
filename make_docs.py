@@ -1,10 +1,11 @@
 """Generate report figures (assets/figures/*.png) and presentation.pptx.
 
-Every number is computed by game_theory.py, so the slides always match the app.
+Every number is computed by game_theory.py, so the slides always match the website.
 Run:  .venv/bin/python make_docs.py
 """
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
 
 import matplotlib
@@ -116,7 +117,7 @@ def fig_q_sensitivity() -> Path:
 def fig_heatmap() -> Path:
     qs = np.linspace(0.5, 1.0, 101)
     costs = np.linspace(0, 9.9, 100)
-    codes = gt.sensitivity_grid(BASELINE, qs, costs, "cost")
+    codes = gt.sensitivity_grid(BASELINE, qs, costs)
     present = sorted(set(codes.flatten().tolist()))
     palette = {0: TEAL, 1: AMBER, 2: NAVY, 3: "#c0504d", 4: "#999999"}
     index = {c: i for i, c in enumerate(present)}
@@ -441,6 +442,11 @@ def build_presentation(figs: dict[str, Path]) -> Path:
     _notes(s, "Restate the research question and the answer, then invite questions.")
 
     path = ROOT / "presentation.pptx"
+    meta = prs.core_properties
+    meta.title, meta.subject = PROJECT_TITLE, f"{SUBJECT} · {SECTION}"
+    meta.author = meta.last_modified_by = "; ".join(n for n, _ in TEAM)
+    meta.comments = ""
+    meta.created = meta.modified = datetime.now()
     prs.save(path)
     return path
 

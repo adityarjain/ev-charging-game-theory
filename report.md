@@ -285,7 +285,7 @@ Three regimes appear, matching the thresholds of Section 6.7:
 
 ![Station A's gain from choosing Low instead of High against each rival action, with the computed equilibrium regions.](assets/figures/fig_q_sensitivity.png){width=95%}
 
-**Second parameter: operating cost.** With both stations' cost $c$ varied from ₹0 to ₹9.90, the thresholds move: at $c$ = 0 they are q = 0.583 and 0.600; at $c$ = 4 they are 0.625 and 0.667; at $c$ = 8 they are 0.750 and 1.000. Higher costs shrink the low price's margin relative to the high price's, so a larger share advantage is needed before undercutting pays. The website offers the same map with the high price as the second parameter.
+**Second parameter: operating cost.** With both stations' cost $c$ varied from ₹0 to ₹9.90, the thresholds move: at $c$ = 0 they are q = 0.583 and 0.600; at $c$ = 4 they are 0.625 and 0.667; at $c$ = 8 they are 0.750 and 1.000. Higher costs shrink the low price's margin relative to the high price's, so a larger share advantage is needed before undercutting pays.
 
 ![Pure Nash equilibria across q and a common operating cost (each cell is a full re-solve of the game).](assets/figures/fig_heatmap_cost.png){width=95%}
 
