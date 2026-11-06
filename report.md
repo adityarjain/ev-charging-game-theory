@@ -6,7 +6,9 @@ author:
   - "Arnav Khandelwal — 2427030196"
   - "Pranav Chauhan — 2427030220"
   - "Khushi Yadav — 2427030186"
-date: "Faculty: Dr Soni Gupta"
+date: |
+  Faculty: Dr Soni Gupta\
+  GitHub repository: <https://github.com/adityarjain/ev-charging-game-theory>
 ---
 
 ```{=openxml}
